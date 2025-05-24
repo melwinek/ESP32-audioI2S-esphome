@@ -4993,8 +4993,9 @@ uint32_t Audio::getTotalPlayingTime() {
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 bool Audio::setTimeOffset(int sec) { // fast forward or rewind the current position in seconds
-
+#ifndef AUDIO_NO_SD_FS	
     if(!audiofile || !m_avr_bitrate) return false;
+#endif //AUDIO_NO_SD_FS		
     if(m_codec == CODEC_OPUS) return false;   // not impl. yet
     if(m_codec == CODEC_VORBIS) return false; // not impl. yet
 
@@ -5013,7 +5014,9 @@ bool Audio::setTimeOffset(int sec) { // fast forward or rewind the current posit
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 bool Audio::setFilePos(uint32_t pos) {
+	#ifndef AUDIO_NO_SD_FS	
     if(!audiofile) return false;
+	#endif //AUDIO_NO_SD_FS	
     if(m_codec == CODEC_OPUS) return false;   // not impl. yet
     if(m_codec == CODEC_VORBIS) return false; // not impl. yet
     memset(m_outBuff, 0, m_outbuffSize);
